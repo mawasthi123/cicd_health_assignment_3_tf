@@ -9,11 +9,12 @@
 - Backend: Python (FastAPI)
 - Database: SQLite (local dev)
 - CI/CD Tool: GitHub Actions (local simulation)
-- Alerting: Email
+- Alerting: Slack (Webhook)
 - Frontend: React
 - Containerization: Docker
 
 ## Next Steps
 - Scaffold backend and frontend
-- Implement core features
+- Implement core features (switched alerting from email to Slack)
 - Add Dockerization and documentation
+- Jenkins integration considered, but not required for demo. Design allows for future extensibility.

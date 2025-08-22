@@ -21,5 +21,4 @@ def test_builds():
 
 def test_alerts():
     resp = client.post("/api/alerts/test")
-    # Accept 200 or 500 (if SMTP not configured)
-    assert resp.status_code in (200, 500)
+    assert resp.status_code in (200, 500)  # Accept 200 or 500 (if Slack webhook not configured)

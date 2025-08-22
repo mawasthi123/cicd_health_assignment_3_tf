@@ -5,16 +5,20 @@ services:
     container_name: cicd-backend
     ports:
       - "8000:8000"
+    # Mount source code for development; remove for production
     volumes:
       - ./backend:/app
     env_file:
-      - ./backend/.env
+      - ./backend/.env  # Set SLACK_WEBHOOK_URL here
+    restart: unless-stopped
   frontend:
     build: ./frontend
     container_name: cicd-frontend
     ports:
       - "3000:3000"
+    # Mount source code for development; remove for production
     volumes:
       - ./frontend:/app
     environment:
       - REACT_APP_API_URL=http://localhost:8000
+    restart: unless-stopped

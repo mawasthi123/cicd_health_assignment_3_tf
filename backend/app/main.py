@@ -7,9 +7,10 @@ import os
 app = FastAPI()
 
 # Allow frontend to access backend
+origins = os.getenv("CORS_ALLOW_ORIGINS", "*").split(",")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -63,13 +64,10 @@ def get_build_logs(build_id: int, db: Session = Depends(get_db)):
 
 @app.post("/api/alerts/test")
 def test_alert():
-    to_email = os.getenv("ALERT_TO_EMAIL", "recipient@example.com")
     try:
-        alerting.send_email_alert(
-            subject="Test CI/CD Pipeline Alert",
-            body="This is a test alert from the CI/CD Health Dashboard.",
-            to_email=to_email
+        alerting.send_slack_alert(
+            "This is a test alert from the CI/CD Health Dashboard."
         )
-        return {"message": f"Test alert sent to {to_email}"}
+        return {"message": "Test Slack alert sent"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

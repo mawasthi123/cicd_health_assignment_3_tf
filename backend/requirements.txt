@@ -4,4 +4,4 @@ sqlalchemy
 aiosqlite
 pydantic
 python-dotenv
-email-validator
+requests

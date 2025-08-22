@@ -1,16 +1,16 @@
 # Tech Design Document
 
 ## High-Level Architecture
-- **Backend (FastAPI):** Handles API requests, stores build data, triggers email alerts
+- **Backend (FastAPI):** Handles API requests, stores build data, triggers Slack alerts
 - **Database (SQLite):** Stores pipelines, builds, and alert logs
 - **Frontend (React):** Visualizes metrics, build status, and logs
-- **Alerting:** Sends email notifications on failures
+- **Alerting:** Sends Slack notifications on failures
 
 ## API Structure
 - `GET /api/metrics` – Returns success/failure rate, avg build time, last build status
 - `GET /api/builds` – Lists recent builds with status, duration, and logs
 - `GET /api/builds/{id}/logs` – Returns logs for a specific build
-- `POST /api/alerts/test` – Triggers a test email alert
+- `POST /api/alerts/test` – Triggers a test Slack alert
 
 ## Database Schema
 - **pipelines**: id, name, provider, repo, created_at
@@ -24,6 +24,6 @@
 - **Log Viewer:** Modal or section to display build logs
 
 ## Extensibility
-- Can add support for more CI/CD tools (Jenkins, etc.)
+- Jenkins integration is not required for this demo, but the backend and data model are extensible for Jenkins or other CI/CD tools in the future.
 - Can switch to PostgreSQL for production
-- Can add Slack alerting or other integrations
+- Slack alerting implemented; can add other integrations
