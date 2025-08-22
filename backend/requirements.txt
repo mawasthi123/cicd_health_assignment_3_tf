@@ -5,3 +5,5 @@ aiosqlite
 pydantic
 python-dotenv
 requests
+pytest
+httpx
