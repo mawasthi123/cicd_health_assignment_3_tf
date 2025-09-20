@@ -32,7 +32,7 @@ terraform apply
 
 ### 3. Get New Access Information
 ```bash
-# Use the dynamic monitoring script
+# Use the dynamic monitoring script (recommended)
 ./monitor_dynamic.sh
 
 # Or get specific outputs
@@ -40,19 +40,16 @@ terraform output public_ip
 terraform output instance_id
 ```
 
-## 🛠️ Monitoring Scripts
+## 🛠️ Monitoring
 
-### Dynamic Script (Recommended)
+### Dynamic Monitoring Script (Only Script Available)
 ```bash
 ./monitor_dynamic.sh
 ```
 - Automatically gets current public IP from Terraform state
 - Works after any recreation
 - No manual updates needed
-
-### Manual Scripts (Need Updates)
-- `monitor.sh` - Contains hardcoded IP
-- `monitor_deployment.sh` - Contains hardcoded IP
+- **This is the only monitoring script you need!**
 
 ## 🔧 Troubleshooting
 
@@ -76,12 +73,6 @@ terraform output instance_id
    docker compose -f docker-compose.prod.yml restart
    ```
 
-## 📝 Files That Need Updates (If Using Manual Scripts)
-
-After recreation, update these files with the new public IP:
-- `monitor.sh` - Line with hardcoded IP
-- `monitor_deployment.sh` - Line with hardcoded IP
-
 ## ✅ Best Practices
 
 1. **Always use `monitor_dynamic.sh`** for checking status
@@ -98,3 +89,8 @@ terraform destroy -auto-approve
 terraform apply -auto-approve
 ./monitor_dynamic.sh
 ```
+
+## 📝 Note
+- Old monitoring scripts with hardcoded IPs have been removed
+- Only `monitor_dynamic.sh` is available and recommended
+- This script automatically adapts to any new public IP after recreation
