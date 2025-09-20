@@ -8,6 +8,29 @@ data "aws_ami" "linux" {
   }
 }
 
+resource "aws_db_instance" "postgres" {
+  identifier              = "${var.project_name}-db"
+  engine                  = "postgres"
+  engine_version          = var.rds_engine_version
+  instance_class          = var.rds_instance_class
+  allocated_storage       = 20
+  db_name                 = var.db_name
+  username                = var.db_username
+  password                = var.db_password
+  port                    = 5432
+  db_subnet_group_name    = aws_db_subnet_group.rds_subnets.name
+  vpc_security_group_ids  = [aws_security_group.rds_sg.id]
+  publicly_accessible     = false
+  backup_retention_period = 0
+  skip_final_snapshot     = true
+  deletion_protection     = false
+  apply_immediately       = true
+  multi_az                = false
+  tags = {
+    Name = "${var.project_name}-rds"
+  }
+}
+
 resource "aws_security_group" "allow_vpc_endpoint" {
   # placeholder to ensure dependency graph clarity if needed later
   vpc_id = aws_vpc.main.id
@@ -36,10 +59,7 @@ resource "aws_iam_instance_profile" "ec2_profile" {
 }
 
 locals {
-  user_data_rendered = templatefile("${path.module}/user_data.sh", {
-    GITHUB_REPO_URL   = var.github_repo_url
-    SLACK_WEBHOOK_URL = var.slack_webhook_url
-  })
+  user_data_rendered = base64encode(file("${path.module}/user_data.sh"))
 }
 
 resource "aws_instance" "app" {

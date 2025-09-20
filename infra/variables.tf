@@ -16,6 +16,12 @@ variable "availability_zone" {
   default     = "ap-south-1a"
 }
 
+variable "availability_zone_alt" {
+  type        = string
+  description = "Alternate AZ for subnet 2 (for RDS multi-subnet)"
+  default     = "ap-south-1b"
+}
+
 variable "instance_type" {
   type        = string
   description = "EC2 instance type"
@@ -57,5 +63,35 @@ variable "slack_webhook_url" {
   description = "Slack webhook URL for alerts"
   default     = ""
   sensitive   = true
+}
+
+variable "rds_instance_class" {
+  type        = string
+  description = "RDS instance class"
+  default     = "db.t3.micro"
+}
+
+variable "rds_engine_version" {
+  type        = string
+  description = "PostgreSQL engine version"
+  default     = "16.3"
+}
+
+variable "db_username" {
+  type        = string
+  description = "Database master username"
+  default     = "appuser"
+}
+
+variable "db_password" {
+  type        = string
+  description = "Database master password"
+  sensitive   = true
+}
+
+variable "db_name" {
+  type        = string
+  description = "Application database name"
+  default     = "cicd_dashboard"
 }
 

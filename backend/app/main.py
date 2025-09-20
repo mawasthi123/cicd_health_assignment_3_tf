@@ -27,6 +27,10 @@ def get_db():
 def read_root():
     return {"message": "CI/CD Health Dashboard Backend Running"}
 
+@app.get("/health")
+def health_check():
+    return {"status": "healthy", "message": "Backend is running"}
+
 @app.get("/api/metrics")
 def get_metrics(db: Session = Depends(get_db)):
     builds = crud.get_builds(db)
